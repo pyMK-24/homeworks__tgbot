@@ -34,5 +34,4 @@ async def review_extra_comments_handler(message: types.Message, state: FSMContex
 @dialog_review.message(RestourantReview.extra_comments)
 async def review_extra_com_handler(message: types.Message, state: FSMContext):
     await message.answer("Спасибо за Ваш отзыв!")
-    await state.set_state(RestourantReview.extra_comments)
     await state.clear()
