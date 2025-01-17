@@ -2,7 +2,7 @@ from aiogram import types,F,Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State,StatesGroup
-from bot_config import datebase
+from bot_config import database
 
 dialog_review = Router()
 
@@ -51,5 +51,5 @@ async def review_extra_com_handler(message: types.Message, state: FSMContext):
     await state.update_data(extra_comments=extra_comments)
     await message.answer("Спасибо за Ваш отзыв!")
     data = await state.get_data()
-    datebase.save_review(data)
+    database.save_review(data)
     await state.clear()

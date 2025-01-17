@@ -1,6 +1,6 @@
 import sqlite3
 
-class Datebase:
+class Database:
     def __init__(self, path: str):
         self.path = path
     
