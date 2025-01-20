@@ -41,6 +41,13 @@ async def review_rate_handler(message: types.Message, state: FSMContext):
 @dialog_review.message(RestourantReview.rate)
 async def review_extra_comments_handler(message: types.Message, state: FSMContext):
     rate = message.text
+    if not rate.isdigit():
+        await message.answer("Вводите только цифры.")
+        return
+    rate = int(rate)
+    if rate < 1 or rate > 5:
+        await message.answer("Вводите только от 1 до 5")
+        return
     await state.update_data(rate = rate)
     await message.answer("Напишите пожалуйста отзыв про наш ресторан.")
     await state.set_state(RestourantReview.extra_comments)
