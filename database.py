@@ -41,3 +41,11 @@ class Database:
                          VALUES(?,?,?,?,?)""",
                          (data["name"],data["price"],data["description"],data["category"],data["option"])
                          )
+            
+    def get_all_dishes(self):
+        with sqlite3.connect(self.path) as conn:
+            cursor = conn.cursor()
+            result = conn.execute("""SELECT * FROM dishes""")
+            result.row_factory = sqlite3.Row
+            data = result.fetchall()
+            return [dict(row) for row in data]
