@@ -20,10 +20,9 @@ class Database:
                          CREATE TABLE IF NOT EXISTS dishes(
                              id INTEGER PRIMARY KEY AUTOINCREMENT,
                              name TEXT,
-                             price INTEGER,
+                             price FLOAT,
                              description TEXT,
-                             category TEXT,
-                             option TEXT
+                             category TEXT 
                              )""")
             
     def save_review(self, data: dict):
@@ -37,9 +36,9 @@ class Database:
     def save_dish(self, data: dict):
         with sqlite3.connect(self.path) as conn:
             conn.execute("""
-                         INSERT INTO dishes (name,price,description,category,option)
-                         VALUES(?,?,?,?,?)""",
-                         (data["name"],data["price"],data["description"],data["category"],data["option"])
+                         INSERT INTO dishes (name,price,description,category)
+                         VALUES(?,?,?,?)""",
+                         (data["name"],data["price"],data["description"],data["category"])
                          )
             
     def get_all_dishes(self):

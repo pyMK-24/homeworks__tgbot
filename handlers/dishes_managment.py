@@ -1,7 +1,7 @@
 from aiogram import Router, F, types
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.state import State, StatesGroup,default_state
 
 from bot_config import database
 from database import Database
@@ -14,9 +14,9 @@ class Dishes(StatesGroup):
     price = State()
     description = State()
     category = State()
-    option = State()
     
-@dishes_admin_router.message(Command("dishes"))
+    
+@dishes_admin_router.message(Command("dishes"),default_state)
 async def new_dish(message: types.Message, state: FSMContext):
     await message.answer("Введите названия блюда")
     message.from_user.id
@@ -50,14 +50,8 @@ async def dish_name(message: types.Message, state: FSMContext):
     
 @dishes_admin_router.message(Dishes.category)
 async def dish_name(message: types.Message, state: FSMContext):
-    await message.answer("Введите вариант порции блюда")
-    await state.update_data(category=message.text)
-    await state.set_state(Dishes.option)
-    
-@dishes_admin_router.message(Dishes.option)
-async def dish_name(message: types.Message, state: FSMContext):
     await message.answer("Данное  блюдо теперь у нас сохранено.")
-    await state.update_data(option=message.text)
+    await state.update_data(category=message.text)
     data = await state.get_data()
     database.save_dish(data)
     await state.clear()    

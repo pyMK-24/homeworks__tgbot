@@ -1,7 +1,7 @@
 from aiogram import types,F,Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import State,StatesGroup
+from aiogram.fsm.state import State,StatesGroup,default_state
 from bot_config import database
 
 dialog_review = Router()
@@ -18,7 +18,7 @@ async def stop_dialog(message: types.Message, state: FSMContext):
     await message.answer("Диалог прерван.")
     await state.clear()
  
-@dialog_review.callback_query(F.data == "review")
+@dialog_review.callback_query(F.data == "review",default_state)
 async def review_name_handler(callback_query: types.CallbackQuery, state:FSMContext):
     await callback_query.message.answer("Оставьте жалобу ответив на несколько вопросов. Можете остановить диалог с ботом введя '/stop' или 'стоп'")
     await callback_query.message.answer("Как вас зовут?")

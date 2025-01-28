@@ -9,7 +9,7 @@ async def start_handler(message: types.Message):
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
         [
-            types.InlineKeyboardButton(text="Каталог блюд",callback_data="catalog")  
+            types.InlineKeyboardButton(text="Каталог блюд с пагинацией",callback_data="alldishes")  
         ],
         [
             types.InlineKeyboardButton(text="Наш сайт",url="https://www.gastronome-restaurant.com")
@@ -42,27 +42,6 @@ async def about_us_handler(callback: types.CallbackQuery):
 @start_router.callback_query(F.data == "phone_nums")
 async def phone_nums_handler(callback: types.CallbackQuery):
     await callback.message.answer("Наши номера: \n+7 (495) 123-45-67 \n+7 (800) 765-43-21")
-    
-@start_router.callback_query(F.data == "catalog")
-async def catalog_handler(callback: types.CallbackQuery):
-    menu = """
-    Закуски: 
-        1. Цезарь с курицей - 450 руб
-        2. Тартар из лосося - 550 руб
-        3. Брускетты с помидорами и базиликом - 250 руб
-    Основные блюда: 
-        1. Стейк Рибай с овощами гриль - 1200 руб
-        2. Ризотто с грибами - 650 руб
-        3. Курица на гриле с картофельным пюре - 750 руб
-    Десерты: 
-        1. Тирамису - 350 руб
-        2. Шоколадный фондан - 400 руб
-        3. Панна котта с ягодами - 300 руб
-    Напитки: 
-        1. Свежевыжатый апельсиновый сок - 250 руб
-        2. Домашний лимонад - 220 руб
-        3. Минеральная вода (без газа) - 100 руб
-    """
-    await callback.message.answer(menu)
+
     
 
