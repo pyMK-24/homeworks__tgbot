@@ -1,25 +1,18 @@
 import asyncio
 import logging
-from  aiogram import Bot
+from aiogram import Bot
 
 from bot_config import bot,dp,database
-from handlers.start import start_router   
-from handlers.other_commands import other_router
-from handlers.dialog_rewiew import dialog_review
-from handlers.dishes_managment import dishes_admin_router
-from handlers.dishes import catalog_dishes_router
+from handlers.start import start_router
+from handlers.homework import homework_router
 
-async def on_startup(bot: Bot):
-    database.create_table()
+async def startup(bot: Bot):
+    database.create_tables()
 
 async def main():
     dp.include_router(start_router)
-    dp.include_router(dialog_review)
-    dp.include_router(dishes_admin_router)
-    dp.include_router(catalog_dishes_router)
-    dp.include_router(other_router)
-    
-    dp.startup.register(on_startup)
+    dp.include_router(homework_router)
+    dp.startup.register(startup)
     await dp.start_polling(bot)
     
 if __name__ == "__main__":
